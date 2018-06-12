@@ -14,17 +14,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gerhardsletten/react-reader.git"
+    "url": "git+https://github.com/gerhardsletten/react-reader-jnaut.git"
   },
-  "author": "Eyvind Gerhard Sletten",
+  "author": "Mohan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gerhardsletten/react-reader/issues"
+    "url": "https://github.com/gerhardsletten/react-reader-jnaut/issues"
   },
   "standard": {
     "parser": "babel-eslint"
   },
-  "homepage": "https://github.com/gerhardsletten/react-reader#readme",
+  "homepage": "https://github.com/gerhardsletten/react-reader-jnaut#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "epubjs": "^0.3.58",
-    "prop-type": "0.0.1",
     "react-swipeable": "^4.2.0"
   },
   "peerDependencies": {
