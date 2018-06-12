@@ -1,11 +1,11 @@
 {
   "name": "react-reader",
-  "version": "0.16.8",
+  "version": "0.16.7",
   "description": "A epub-reader for React powered by ePubJS",
   "main": "lib/index.js",
   "scripts": {
     "compile": "NODE_ENV=production babel --optional runtime -d lib/ src/",
-    "prepare": "npm run compile",
+    "prepublish": "npm run compile",
     "start": "webpack-dev-server --port 3001 --host 0.0.0.0 --progress --colors --config ./webpack.config.js",
     "build": "webpack --verbose --colors --display-error-details --config ./webpack.build.config.js",
     "lint": "eslint -c .eslintrc src demo; exit 0",
@@ -14,17 +14,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mohanrajoria/react-reader-jnaut.git"
+    "url": "git+https://github.com/gerhardsletten/react-reader.git"
   },
-  "author": "mohan",
+  "author": "Eyvind Gerhard Sletten",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mohanrajoria/react-reader-jnaut/issues"
+    "url": "https://github.com/gerhardsletten/react-reader/issues"
   },
   "standard": {
     "parser": "babel-eslint"
   },
-  "homepage": "https://github.com/mohanrajoria/react-reader-jnaut#readme",
+  "homepage": "https://github.com/gerhardsletten/react-reader#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "epubjs": "^0.3.58",
+    "prop-type": "0.0.1",
     "react-swipeable": "^4.2.0"
   },
   "peerDependencies": {

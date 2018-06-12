@@ -1,19 +1,17 @@
-import React, { PureComponent } from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Swipeable from 'react-swipeable'
-import { EpubView } from '..'
+import {EpubView} from '..'
 import defaultStyles from './style'
 
 class TocItem extends PureComponent {
   setLocation = () => {
     this.props.setLocation(this.props.href)
   }
-  render() {
-    const { label, styles } = this.props
+  render () {
+    const {label, styles} = this.props
     return (
-      <button onClick={this.setLocation} style={styles}>
-        {label}
-      </button>
+      <button onClick={this.setLocation} style={styles}>{label}</button>
     )
   }
 }
@@ -26,9 +24,8 @@ TocItem.propTypes = {
 }
 
 class ReactReader extends PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.readerRef = React.createRef()
     this.state = {
       expanedToc: false,
       toc: false
@@ -41,104 +38,61 @@ class ReactReader extends PureComponent {
   }
 
   next = () => {
-    const node = this.readerRef.current
-    node.nextPage()
+    this.refs.reader.nextPage()
   }
 
   prev = () => {
-    const node = this.readerRef.current
-    node.prevPage()
+    this.refs.reader.prevPage()
   }
 
-  onTocChange = toc => {
-    const { tocChanged } = this.props
-    this.setState(
-      {
-        toc: toc
-      },
-      () => tocChanged && tocChanged(toc)
-    )
+  onTocChange = (toc) => {
+    const {tocChanged} = this.props
+    this.setState({
+      toc: toc
+    }, () => tocChanged && tocChanged(toc))
   }
 
-  renderToc() {
-    const { toc, expanedToc } = this.state
-    const { styles } = this.props
+  renderToc () {
+    const {toc, expanedToc} = this.state
+    const {styles} = this.props
     return (
       <div>
         <div style={styles.tocArea}>
           <div style={styles.toc}>
-            {toc.map(item => (
-              <TocItem
-                key={item.href}
-                {...item}
-                setLocation={this.setLocation}
-                styles={styles.tocAreaButton}
-              />
-            ))}
+            {toc.map((item, i) =>
+              <TocItem key={item.href} {...item} setLocation={this.setLocation} styles={styles.tocAreaButton} />
+            )}
           </div>
         </div>
-        {expanedToc && (
-          <div style={styles.tocBackground} onClick={this.toggleToc} />
-        )}
+        {expanedToc && <div style={styles.tocBackground} onClick={this.toggleToc} />}
       </div>
     )
   }
 
-  setLocation = loc => {
-    const { locationChanged } = this.props
-    this.setState(
-      {
-        expanedToc: false
-      },
-      () => locationChanged && locationChanged(loc)
-    )
+  setLocation = (loc) => {
+    const {locationChanged} = this.props
+    this.setState({
+      expanedToc: false
+    }, () => locationChanged && locationChanged(loc))
   }
 
-  renderTocToggle() {
-    const { expanedToc } = this.state
-    const { styles } = this.props
+  renderTocToggle () {
+    const {expanedToc} = this.state
+    const {styles} = this.props
     return (
-      <button
-        style={Object.assign(
-          {},
-          styles.tocButton,
-          expanedToc ? styles.tocButtonExpaned : {}
-        )}
-        onClick={this.toggleToc}
-      >
-        <span
-          style={Object.assign({}, styles.tocButtonBar, styles.tocButtonBarTop)}
-        />
-        <span
-          style={Object.assign({}, styles.tocButtonBar, styles.tocButtonBottom)}
-        />
+      <button style={Object.assign({}, styles.tocButton, expanedToc ? styles.tocButtonExpaned : {})} onClick={this.toggleToc}>
+        <span style={Object.assign({}, styles.tocButtonBar, styles.tocButtonBarTop)} />
+        <span style={Object.assign({}, styles.tocButtonBar, styles.tocButtonBottom)} />
       </button>
     )
   }
 
-  render() {
-    const {
-      url,
-      title,
-      showToc,
-      loadingView,
-      epubOptions,
-      styles,
-      getRendition,
-      locationChanged,
-      location,
-      swipeable
-    } = this.props
-    const { toc, expanedToc } = this.state
+  render () {
+    const {url, title, showToc, loadingView, epubOptions, styles, getRendition, locationChanged, location, swipeable} = this.props
+    const {toc, expanedToc} = this.state
     return (
       <div style={styles.container}>
-        <div
-          style={Object.assign(
-            {},
-            styles.readerArea,
-            expanedToc ? styles.containerExpaned : {}
-          )}
-        >
+        <div style={Object.assign({}, styles.readerArea, expanedToc ? styles.containerExpaned : {})}>
           {showToc && this.renderTocToggle()}
           <div style={styles.titleArea}>{title}</div>
           <Swipeable
@@ -148,7 +102,7 @@ class ReactReader extends PureComponent {
           >
             <div style={styles.reader}>
               <EpubView
-                ref={this.readerRef}
+                ref='reader'
                 url={url}
                 location={location}
                 loadingView={loadingView}
@@ -160,18 +114,8 @@ class ReactReader extends PureComponent {
               {swipeable && <div style={styles.swipeWrapper} />}
             </div>
           </Swipeable>
-          <button
-            style={Object.assign({}, styles.arrow, styles.prev)}
-            onClick={this.prev}
-          >
-            ‹
-          </button>
-          <button
-            style={Object.assign({}, styles.arrow, styles.next)}
-            onClick={this.next}
-          >
-            ›
-          </button>
+          <button style={Object.assign({}, styles.arrow, styles.prev)} onClick={this.prev}>‹</button>
+          <button style={Object.assign({}, styles.arrow, styles.next)} onClick={this.next}>›</button>
         </div>
         {showToc && toc && this.renderToc()}
       </div>
@@ -195,7 +139,10 @@ ReactReader.propTypes = {
     PropTypes.instanceOf(ArrayBuffer)
   ]),
   showToc: PropTypes.bool,
-  location: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  location: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   locationChanged: PropTypes.func,
   tocChanged: PropTypes.func,
   styles: PropTypes.object,

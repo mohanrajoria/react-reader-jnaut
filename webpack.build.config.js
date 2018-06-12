@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
+const Uglify = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  mode: 'production',
   entry: {
     main: [
+      'babel-polyfill',
       './demo/index'
     ]
   },
@@ -17,10 +18,11 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    })
+    }),
+    new Uglify()
   ],
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -32,6 +34,29 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot|svg|png)(\?\S*)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
             }
           }
         ]
